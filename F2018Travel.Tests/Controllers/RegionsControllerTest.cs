@@ -25,9 +25,10 @@ namespace F2018Travel.Tests.Controllers
             mock = new Mock<IMockRegions>();
             regions = new List<Region>
             {
+                // nice
                 new Region { RegionId = 78, Region1 = "Oceania" },
-                new Region { RegionId = 349, Region1 = "Eurasia" },
-                new Region { RegionId = 205, Region1 = "Eastasia" },
+                new Region { RegionId = 349, Region1 = "Eurasia" }, 
+                new Region { RegionId = 205, Region1 = "Eastasia" }, 
             };
 
             region = new Region
@@ -38,5 +39,57 @@ namespace F2018Travel.Tests.Controllers
             mock.Setup(m => m.Regions).Returns(regions.AsQueryable());
             controller = new RegionsController(mock.Object);
         }
+
+        // GET: Regions
+        [TestMethod]
+        public void IndexViewLoads()
+        {
+            // act
+            ViewResult result = controller.Index() as ViewResult;
+
+            // assert
+            Assert.AreEqual("Index", result.ViewName);
+        }
+
+        [TestMethod]
+        public void IndexValidLoadsRegions()
+        {
+            // act
+            var actual = (List<Region>)((ViewResult)controller.Index()).Model;
+
+            // assert
+            CollectionAssert.AreEqual(regions.ToList(), actual);
+        }
+
+        [TestMethod]
+        public void DetailsValidId()
+        {
+            // act
+            Region actual = (Region)((ViewResult)controller.Details(regions[0].RegionId)).Model;
+
+            // assert
+            Assert.AreEqual(regions[0], actual);
+        }
+
+        [TestMethod]
+        public void DetailsInvalidId()
+        {
+            // act
+            var result = (ViewResult)controller.Details(2537);
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+
+        [TestMethod]
+        public void DetailsNoId()
+        {
+            // act
+            var result = (ViewResult)controller.Details(null);
+
+            // assert
+            Assert.AreEqual("Error", result.ViewName);
+        }
+
     }
 }

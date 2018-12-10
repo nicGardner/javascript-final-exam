@@ -29,7 +29,7 @@ namespace F2018Travel.Controllers
         // GET: Regions
         public ActionResult Index()
         {
-            return View(db.Regions.ToList());
+            return View("Index", db.Regions.ToList());
         }
 
         // GET: Regions/Details/5
@@ -43,7 +43,7 @@ namespace F2018Travel.Controllers
             Region region = db.Regions.SingleOrDefault(r => r.RegionId == id);
             if (region == null)
             {
-                return HttpNotFound();
+                return View("Error");
             }
             return View(region);
         }
