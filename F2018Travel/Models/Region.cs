@@ -8,6 +8,7 @@ namespace F2018Travel.Models
 
     public partial class Region
     {
+
         public Region()
         {
             Destinations = new HashSet<Destination>();
