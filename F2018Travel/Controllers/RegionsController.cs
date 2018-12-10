@@ -38,7 +38,7 @@ namespace F2018Travel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Region region = db.Regions.SingleOrDefault(r => r.RegionId == id);
+            Region region = db.Regions.Find(id);
             if (region == null)
             {
                 return HttpNotFound();
